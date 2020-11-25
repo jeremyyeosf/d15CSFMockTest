@@ -8,9 +8,13 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 })
 export class AppComponent implements OnInit {
   form: FormGroup;
+  minDate: Date;
+  maxDate: Date;
 
   constructor(private fb: FormBuilder) {
-
+    const currentYear = new Date().getFullYear();
+    this.minDate = new Date(currentYear - 20, 0, 1);
+    this.maxDate = new Date(currentYear + 1, 11, 31);
   }
 
   ngOnInit () {

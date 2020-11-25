@@ -3,3 +3,82 @@
       <span>Bitcoin Order Form</span>
   </mat-toolbar-row>
 </mat-toolbar>
+
+
+<form class="example-form">
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Contact Number</mat-label>
+    <input matInput value="">
+  </mat-form-field>
+
+  <table class="example-full-width" cellspacing="0"><tr>
+    <td><mat-form-field class="example-full-width">
+      <mat-label>First name</mat-label>
+      <input matInput>
+    </mat-form-field></td>
+
+    <td><mat-form-field class="example-full-width">
+      <mat-label>Last Name</mat-label>
+      <input matInput>
+    </mat-form-field></td>
+  </tr></table>
+
+  <label id="example-radio-group-label">Gender</label>
+  <mat-radio-group class="example-radio-group" aria-label="Select an option">
+    <mat-radio-button value="male">Male</mat-radio-button>
+    <mat-radio-button value="female">Female</mat-radio-button>
+  </mat-radio-group>
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Date of Birth</mat-label>
+    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Order Date</mat-label>
+    <input matInput [matDatepicker]="picker">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  
+  <mat-form-field appearance="fill">
+    <mat-label>Order Type</mat-label>
+    <select matNativeControl required>
+      <option value="buy">Buy</option>
+      <option value="sell">Sell</option>
+    </select>
+  </mat-form-field>
+  <table>
+    <tr>
+      <td><mat-form-field class="example-full-width">
+        <mat-label>Order Unit</mat-label>
+        <input matInput>
+      </mat-form-field></td>
+    </tr>
+  </table>
+
+  <mat-label>SGD/BTC</mat-label>
+  <br>
+  <mat-label>Current Price</mat-label>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Paylah/Paynow QR Code URL</mat-label>
+    <input matInput>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Bitcoin address</mat-label>
+    <input matInput>
+  </mat-form-field>
+  <br>
+  <mat-label>Equivalent Amount in SGD</mat-label>
+
+  <br><br><br>
+  <button mat-raised-button>Reset</button>
+  <button mat-raised-button>Submit</button>
+  
+
+</form>
