@@ -5,48 +5,52 @@
 </mat-toolbar>
 
 
-<form class="example-form">
+<form class="example-form" (ngSubmit)="processForm()" [formGroup]="form">
 
   <mat-form-field class="example-full-width">
     <mat-label>Contact Number</mat-label>
-    <input matInput value="">
+    <input matInput value="" formControlName="contactNo">
+    <mat-error *ngIf="form.get('contactNo').hasError('required')">Field is required</mat-error>
   </mat-form-field>
+  
 
-  <table class="example-full-width" cellspacing="0"><tr>
-    <td><mat-form-field class="example-full-width">
-      <mat-label>First name</mat-label>
-      <input matInput>
-    </mat-form-field></td>
-
-    <td><mat-form-field class="example-full-width">
-      <mat-label>Last Name</mat-label>
-      <input matInput>
-    </mat-form-field></td>
-  </tr></table>
+  <table class="example-full-width" cellspacing="0">
+    <tr>
+      <td>
+        <mat-form-field class="example-full-width">
+          <mat-label>First name</mat-label>
+          <input matInput formControlName="name">
+          <mat-error *ngIf="form.get('name').hasError('required')">Field is required</mat-error>
+        </mat-form-field>
+      </td>
+    </tr>
+  </table>
 
   <label id="example-radio-group-label">Gender</label>
-  <mat-radio-group class="example-radio-group" aria-label="Select an option">
+  <mat-radio-group class="example-radio-group" aria-label="Select an option" 
+    formControlName="gender">
     <mat-radio-button value="male">Male</mat-radio-button>
     <mat-radio-button value="female">Female</mat-radio-button>
   </mat-radio-group>
 
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Date of Birth</mat-label>
-    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker">
+    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker"
+    formControlName="dob">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
-  <mat-form-field appearance="fill">
+  <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Order Date</mat-label>
-    <input matInput [matDatepicker]="picker">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
+    <input matInput [matDatepicker]="picker2" formControlName="orderDate">
+    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+    <mat-datepicker #picker2></mat-datepicker>
   </mat-form-field>
   
   <mat-form-field appearance="fill">
     <mat-label>Order Type</mat-label>
-    <select matNativeControl required>
+    <select matNativeControl required formControlName="orderType" (change)="selectOption($event)">
       <option value="buy">Buy</option>
       <option value="sell">Sell</option>
     </select>
@@ -55,7 +59,7 @@
     <tr>
       <td><mat-form-field class="example-full-width">
         <mat-label>Order Unit</mat-label>
-        <input matInput>
+        <input matInput formControlName="orderUnit">
       </mat-form-field></td>
     </tr>
   </table>
@@ -64,21 +68,23 @@
   <br>
   <mat-label>Current Price</mat-label>
 
-  <mat-form-field class="example-full-width">
+  <mat-form-field class="example-full-width" *ngIf="!buySelected">
     <mat-label>Paylah/Paynow QR Code URL</mat-label>
-    <input matInput>
+    <input matInput formControlName="qrCode">
+    <mat-error *ngIf="form.get('qrCode').hasError('required')">Field is required</mat-error>
   </mat-form-field>
 
-  <mat-form-field class="example-full-width">
+  <mat-form-field class="example-full-width" *ngIf="buySelected">
     <mat-label>Bitcoin address</mat-label>
-    <input matInput>
+    <input matInput formControlName="bitcoinAddress">
+    <mat-error *ngIf="form.get('bitcoinAddress').hasError('required')">Field is required</mat-error>
   </mat-form-field>
   <br>
   <mat-label>Equivalent Amount in SGD</mat-label>
 
   <br><br><br>
-  <button mat-raised-button>Reset</button>
-  <button mat-raised-button>Submit</button>
+  <button mat-raised-button (click)="clearForm()">Reset</button>
+  <button mat-raised-button [disabled]="form.invalid">Submit</button>
   
 
 </form>

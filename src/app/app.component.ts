@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormGroupDirective } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +10,7 @@ export class AppComponent implements OnInit {
   form: FormGroup;
   minDate: Date;
   maxDate: Date;
+  buySelected: boolean
 
   constructor(private fb: FormBuilder) {
     const currentYear = new Date().getFullYear();
@@ -26,8 +27,36 @@ export class AppComponent implements OnInit {
       orderDate: this.fb.control('', [Validators.required]),
       orderType: this.fb.control('', [Validators.required]),
       orderUnit: this.fb.control('', [Validators.required]),
-      qrCode: this.fb.control('', [Validators.required]),
-      bitcoinAddress: this.fb.control('', [Validators.required]),
+      qrCode: this.fb.control(''),
+      bitcoinAddress: this.fb.control(''),
+      // {value: '', disabled: !this.buySelected}
     })
+  }
+  selectOption(event) {
+    // console.log('selected: ', event.target.value)
+    if (event.target.value === 'buy') {
+      this.buySelected = true
+      this.form.controls["bitcoinAddress"].setValidators([Validators.required])
+      this.form.controls["bitcoinAddress"].updateValueAndValidity()
+      this.form.controls["qrCode"].clearValidators()
+      this.form.controls["qrCode"].updateValueAndValidity()
+    } else if (event.target.value === 'sell') {
+      this.buySelected = false
+      this.form.controls["qrCode"].setValidators([Validators.required])
+      this.form.controls["qrCode"].updateValueAndValidity()
+      this.form.controls["bitcoinAddress"].clearValidators()
+      this.form.controls["bitcoinAddress"].updateValueAndValidity()
+    }
+  }
+
+
+
+  processForm() {
+    const input = this.form.value
+    console.log('form input: ', input)
+  }
+  clearForm() {
+    this.form.reset()
+
   }
 }
