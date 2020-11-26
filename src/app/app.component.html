@@ -11,6 +11,7 @@
     <mat-label>Contact Number</mat-label>
     <input matInput value="" formControlName="contactNo">
     <mat-error *ngIf="form.get('contactNo').hasError('required')">Field is required</mat-error>
+    <mat-error *ngIf="form.get('contactNo').hasError('pattern')">Please enter a valid number</mat-error>
   </mat-form-field>
   
 
@@ -60,6 +61,9 @@
       <td><mat-form-field class="example-full-width">
         <mat-label>Order Unit</mat-label>
         <input matInput formControlName="orderUnit">
+        <mat-error *ngIf="form.get('orderUnit').hasError('required')">Field is required</mat-error>
+        <mat-error *ngIf="form.get('orderUnit').hasError('pattern')">Please enter a valid number</mat-error>
+        <mat-error *ngIf="form.get('orderUnit').hasError('min')">Order must be more than 0</mat-error>
       </mat-form-field></td>
     </tr>
   </table>

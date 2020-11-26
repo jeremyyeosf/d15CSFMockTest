@@ -1,5 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http'
+
+import {BitcoinService} from './bitcoin.service'
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,6 +19,7 @@ import {
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { fromEventPattern } from 'rxjs';
 
 @NgModule({
   declarations: [
@@ -25,13 +29,14 @@ import { environment } from '../environments/environment';
     BrowserModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [
-    {provide: MAT_DATE_LOCALE, useValue: 'en-SG'},
+  providers: [ BitcoinService, 
+        {provide: MAT_DATE_LOCALE, useValue: 'en-SG'},
     {
       provide: DateAdapter,
       useClass: MomentDateAdapter,

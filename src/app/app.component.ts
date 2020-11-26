@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, FormGroupDirective } from '@angular/forms';
+import { BitcoinService } from './bitcoin.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ export class AppComponent implements OnInit {
   maxDate: Date;
   buySelected: boolean
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private btService: BitcoinService) {
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 20, 0, 1);
     this.maxDate = new Date(currentYear + 1, 11, 31);
@@ -20,13 +21,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit () {
     this.form = this.fb.group({
-      contactNo: this.fb.control('', [Validators.required]),
+      contactNo: this.fb.control('', [Validators.required, Validators.pattern("^[6|8|9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]$")]),
       name: this.fb.control('', [Validators.required]),
       gender: this.fb.control('', [Validators.required]),
       dob: this.fb.control('', [Validators.required]),
       orderDate: this.fb.control('', [Validators.required]),
       orderType: this.fb.control('', [Validators.required]),
-      orderUnit: this.fb.control('', [Validators.required]),
+      orderUnit: this.fb.control('', [Validators.required, Validators.min(0), Validators.pattern("^[0-9]*$")]),
       qrCode: this.fb.control(''),
       bitcoinAddress: this.fb.control(''),
       // {value: '', disabled: !this.buySelected}
@@ -54,6 +55,7 @@ export class AppComponent implements OnInit {
   processForm() {
     const input = this.form.value
     console.log('form input: ', input)
+    
   }
   clearForm() {
     this.form.reset()
